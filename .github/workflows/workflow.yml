@@ -1,0 +1,68 @@
+name: My Workflow
+'on':
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
+jobs:
+  dev:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+    - name: Copy Dev script to Databricks
+      run: databricks workspace import -l PYTHON -f ${{ env.SOURCE_PATH }} -n ${{
+        env.DESTINATION_PATH }}
+      env:
+        DATABRICKS_HOST: your-databricks-instance-url
+        DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+        SOURCE_PATH: /path/to/your/dev_script.py
+        DESTINATION_PATH: /dev/destination/path/
+    - name: Copy Dag to EC2
+      run: scp -i ~/.ssh/ec2_key.pem -r ${{ env.SOURCE_PATH }} ec2-user@${{ secrets.EC2_IP_ADDRESS
+        }}:${{ env.DESTINATION_PATH }}
+      env:
+        SOURCE_PATH: /path/to/your/dag_file.py
+        DESTINATION_PATH: /home/ec2-user/destination/path/
+  qa:
+    runs-on: ubuntu-latest
+    needs: dev
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+    - name: Copy QA script to Databricks
+      run: databricks workspace import -l PYTHON -f ${{ env.SOURCE_PATH }} -n ${{
+        env.DESTINATION_PATH }}
+      env:
+        DATABRICKS_HOST: your-databricks-instance-url
+        DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+        SOURCE_PATH: /path/to/your/qa_script.py
+        DESTINATION_PATH: /qa/destination/path/
+    - name: Copy Dag to EC2
+      run: scp -i ~/.ssh/ec2_key.pem -r ${{ env.SOURCE_PATH }} ec2-user@${{ secrets.EC2_IP_ADDRESS
+        }}:${{ env.DESTINATION_PATH }}
+      env:
+        SOURCE_PATH: /path/to/your/dag_file.py
+        DESTINATION_PATH: /home/ec2-user/destination/path/
+  prod:
+    runs-on: ubuntu-latest
+    needs: qa
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+    - name: Copy Prod script to Databricks
+      run: databricks workspace import -l PYTHON -f ${{ env.SOURCE_PATH }} -n ${{
+        env.DESTINATION_PATH }}
+      env:
+        DATABRICKS_HOST: your-databricks-instance-url
+        DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+        SOURCE_PATH: /path/to/your/qa_script.py
+        DESTINATION_PATH: /qa/destination/path/
+    - name: Copy Dag to EC2
+      run: scp -i ~/.ssh/ec2_key.pem -r ${{ env.SOURCE_PATH }} ec2-user@${{ secrets.EC2_IP_ADDRESS
+        }}:${{ env.DESTINATION_PATH }}
+      env:
+        SOURCE_PATH: /path/to/your/dag_file.py
+        DESTINATION_PATH: /home/ec2-user/destination/path/
