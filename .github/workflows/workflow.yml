@@ -10,7 +10,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Copy to S3
-      run: 'aws s3 cp https://github.com/Srivatsava17/CICD.git/etl s3://codecommitdeploy/github_connection/ '
+      run: 'aws s3 cp --recursive https://github.com/Srivatsava17/CICD.git/etl s3://codecommitdeploy/github_connection/ '
     environment:
       name: qa
   deploy_dev:
@@ -19,7 +19,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Copy to S3
-      run: 'aws s3 cp https://github.com/Srivatsava17/CICD.git/etl s3://codecommitdeploy/github_connection/ '
+      run: 'aws s3 cp --recursive https://github.com/Srivatsava17/CICD.git/etl s3://codecommitdeploy/github_connection/ '
     environment:
       name: dev
   deploy_prod:
@@ -28,6 +28,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Copy to S3
-      run: 'aws s3 cp https://github.com/Srivatsava17/CICD.git/etl s3://codecommitdeploy/github_connection/ '
+      run: 'aws s3 cp --recursive https://github.com/Srivatsava17/CICD.git/etl s3://codecommitdeploy/github_connection/ '
     environment:
       name: prod
