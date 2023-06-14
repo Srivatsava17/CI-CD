@@ -11,7 +11,7 @@ jobs:
       uses: actions/checkout@v2
     - name: Copy to S3
       run: aws s3 cp https://github.com/Srivatsava17/CICD.git/etl s3://codecommitdeploy/github_connection/
-        --region us-west-2 --access-key $AWS_ACCESS_KEY_ID --secret-key $AWS_SECRET_ACCESS_KEY
+        --region us-west-2 --access-key ASIAXWDKBRAVQC2WT76T --secret-key UsTfxVNGpKH6sU102k2QwLwuH+mF3ZlVAGFpqbqQ
     environment:
       name: qa
   deploy_dev:
@@ -21,7 +21,7 @@ jobs:
       uses: actions/checkout@v2
     - name: Copy to S3
       run: aws s3 cp https://github.com/Srivatsava17/CICD.git/etl s3://codecommitdeploy/github_connection/
-        --region us-west-2 --access-key $AWS_ACCESS_KEY_ID --secret-key $AWS_SECRET_ACCESS_KEY
+        --region us-west-2 --access-key ASIAXWDKBRAVQC2WT76T --secret-key UsTfxVNGpKH6sU102k2QwLwuH+mF3ZlVAGFpqbqQ
     environment:
       name: dev
   deploy_prod:
@@ -31,6 +31,6 @@ jobs:
       uses: actions/checkout@v2
     - name: Copy to S3
       run: aws s3 cp https://github.com/Srivatsava17/CICD.git/etl s3://codecommitdeploy/github_connection/
-        --region us-west-2 --access-key $AWS_ACCESS_KEY_ID --secret-key $AWS_SECRET_ACCESS_KEY
+        --region us-west-2 --access-key ASIAXWDKBRAVQC2WT76T --secret-key UsTfxVNGpKH6sU102k2QwLwuH+mF3ZlVAGFpqbqQ
     environment:
       name: prod
