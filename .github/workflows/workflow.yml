@@ -1,56 +1,42 @@
-stages: dev
-qa:
-  stage: qa
-  script:
-  - echo "Running tests"
-  - git clone dev
-  - git pull
-  - scp -i https://s3.console.aws.amazon.com/s3/buckets/codecommitdeploy?region=us-west-2&tab=objects
-    dapic2fa308f2a267e7719481ac7d4b1281a@https://github.com/Srivatsava17/CI-CD.git:https://agilisium.cloud.databricks.com
-  - databricks fs cp /path/to/databricks/file dbfs/FileStore
-  - git add .
-  - git commit -m 'Update from S3'
-  tags:
-  - main
-  - TEST-ETL
-  environment:
-    name: dev
-dev:
-  stage: dev
-  script:
-  - echo "Running tests"
-  - git clone dev
-  - git pull
-  - scp -i https://s3.console.aws.amazon.com/s3/buckets/codecommitdeploy?region=us-west-2&tab=objects
-    dapic2fa308f2a267e7719481ac7d4b1281a@https://github.com/Srivatsava17/CI-CD.git:https://agilisium.cloud.databricks.com
-  - databricks fs cp /path/to/databricks/file dbfs/FileStore
-  - git add .
-  - git commit -m 'Update from S3'
-  tags:
-  - main
-  - TEST-ETL
-  only:
-  - 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
-  environment:
-    name: dev
-prod:
-  stage: prod
-  script:
-  - echo "Running tests"
-  - git clone dev
-  - git pull
-  - scp -i https://s3.console.aws.amazon.com/s3/buckets/codecommitdeploy?region=us-west-2&tab=objects
-    dapic2fa308f2a267e7719481ac7d4b1281a@https://github.com/Srivatsava17/CI-CD.git:https://agilisium.cloud.databricks.com
-  - databricks fs cp /path/to/databricks/file dbfs/FileStore
-  - git add .
-  - git commit -m 'Update from S3'
-  tags:
-  - main
-  - TEST-ETL
-  only:
-  - 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
-  dependencies:
-  - qa
-  - dev
-  environment:
-    name: dev
+name: Deploy Workflow
+'on':
+  push:
+    branches:
+    - main
+jobs:
+  deploy_qa:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Deploy to Databricks
+      run: scp -i https://github.com/Srivatsava17/CI-CD/tree/main/etl https://github.com/Srivatsava17/CI-CD.git
+        dapic2fa308f2a267e7719481ac7d4b1281a@https://agilisium.cloud.databricks.com:dbfs/FileStore/
+    - name: Copy to S3
+      run: databricks fs cp dbfs/FileStore/ https://s3.console.aws.amazon.com/s3/buckets/codecommitdeploy?region=us-west-2&tab=objects
+    environment:
+      name: qa
+  deploy_dev:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Deploy to Databricks
+      run: scp -i https://github.com/Srivatsava17/CI-CD/tree/main/etl https://github.com/Srivatsava17/CI-CD.git
+        dapic2fa308f2a267e7719481ac7d4b1281a@https://agilisium.cloud.databricks.com:dbfs/FileStore/
+    - name: Copy to S3
+      run: databricks fs cp dbfs/FileStore/ https://s3.console.aws.amazon.com/s3/buckets/codecommitdeploy?region=us-west-2&tab=objects
+    environment:
+      name: dev
+  deploy_prod:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Deploy to Databricks
+      run: scp -i https://github.com/Srivatsava17/CI-CD/tree/main/etl https://github.com/Srivatsava17/CI-CD.git
+        dapic2fa308f2a267e7719481ac7d4b1281a@https://agilisium.cloud.databricks.com:dbfs/FileStore/
+    - name: Copy to S3
+      run: databricks fs cp dbfs/FileStore/ https://s3.console.aws.amazon.com/s3/buckets/codecommitdeploy?region=us-west-2&tab=objects
+    environment:
+      name: prod
