@@ -10,7 +10,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Copy to S3
-      run: aws s3 sync https://github.com/Srivatsava17/CI-CD.git https://s3.console.aws.amazon.com/s3/buckets/codecommitdeploy?region=us-west-2&tab=objects
+      run: aws s3 sync https://github.com/Srivatsava17/CI-CD.git s3://codecommitdeploy/github_connection/
     environment:
       name: qa
   deploy_dev:
@@ -19,7 +19,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Copy to S3
-      run: aws s3 sync https://github.com/Srivatsava17/CI-CD.git https://s3.console.aws.amazon.com/s3/buckets/codecommitdeploy?region=us-west-2&tab=objects
+      run: aws s3 sync https://github.com/Srivatsava17/CI-CD.git s3://codecommitdeploy/github_connection/
     environment:
       name: dev
   deploy_prod:
@@ -28,6 +28,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Copy to S3
-      run: aws s3 sync https://github.com/Srivatsava17/CI-CD.git https://s3.console.aws.amazon.com/s3/buckets/codecommitdeploy?region=us-west-2&tab=objects
+      run: aws s3 sync https://github.com/Srivatsava17/CI-CD.git s3://codecommitdeploy/github_connection/
     environment:
       name: prod
