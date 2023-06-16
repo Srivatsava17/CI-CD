@@ -9,9 +9,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Copy to S3
-      run: aws s3 cp https://github.com/Srivatsava17/CICD.git/etl s3://codecommitdeploy/github_connection/
-        --region us-west-2 --access-key ASIAXWDKBRAVQC2WT76T --secret-key UsTfxVNGpKH6sU102k2QwLwuH+mF3ZlVAGFpqbqQ
+    - name: Copy to EC2
+      run: cp etl/example.py /home/ec2-user
     environment:
       name: qa
   deploy_dev:
@@ -19,9 +18,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Copy to S3
-      run: aws s3 cp https://github.com/Srivatsava17/CICD.git/etl s3://codecommitdeploy/github_connection/
-        --region us-west-2 --access-key ASIAXWDKBRAVQC2WT76T --secret-key UsTfxVNGpKH6sU102k2QwLwuH+mF3ZlVAGFpqbqQ
+    - name: Copy to EC2
+      run: cp etl/example.py /home/ec2-user
     environment:
       name: dev
   deploy_prod:
@@ -29,8 +27,7 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Copy to S3
-      run: aws s3 cp https://github.com/Srivatsava17/CICD.git/etl s3://codecommitdeploy/github_connection/
-        --region us-west-2 --access-key ASIAXWDKBRAVQC2WT76T --secret-key UsTfxVNGpKH6sU102k2QwLwuH+mF3ZlVAGFpqbqQ
+    - name: Copy to EC2
+      run: cp etl/example.py /home/ec2-user
     environment:
       name: prod
