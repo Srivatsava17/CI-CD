@@ -5,7 +5,7 @@ name: Deploy Workflow
     - main
 jobs:
   deploy_qa:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -15,7 +15,7 @@ jobs:
     environment:
       name: qa
   deploy_dev:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -25,7 +25,7 @@ jobs:
     environment:
       name: dev
   deploy_prod:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
