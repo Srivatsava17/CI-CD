@@ -1,33 +1,19 @@
-name: Deploy Workflow
-'on':
-  push:
-    branches:
-    - main
 jobs:
-  deploy_qa:
+  dev:
     runs-on: self-hosted
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Copy to EC2
-      run: cp etl/example.py /home/ec2-user
-    environment:
-      name: qa
-  deploy_dev:
+    - name: Deploy to S3
+      run: scp -i s3://testingnew1234/demo/ /home/ec2-user /home/ec2-user/example.py
+    - name: Copy to S3
+      run: aws s3 cp etl/example.py /home/ec2-user/example.py
+  qa:
     runs-on: self-hosted
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Copy to EC2
-      run: cp etl/example.py /home/ec2-user
-    environment:
-      name: dev
-  deploy_prod:
-    runs-on: self-hosted
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Copy to EC2
-      run: cp etl/example.py /home/ec2-user
-    environment:
-      name: prod
+    - name: Deploy to S3
+      run: scp -i s3://testingnew1234/demo/ /home/ec2-user /home/ec2-user/example.py
+    - name: Copy to S3
+      run: aws s3 cp etl/example.py /home/ec2-user/example.py
