@@ -8,16 +8,12 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Deploy to S3
-      run: sudo cp -r etl/example.py /home/ec2-user
     - name: Copy to S3
-      run: 'sudo aws s3 cp /home/ec2-user/example.py s3://testingnew1234/demo/ '
+      run: 'sudo aws s3 cp etl/example.py s3://testingnew1234/demo/ '
   qa:
     runs-on: self-hosted
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Deploy to S3
-      run: sudo cp -r etl/example.py /home/ec2-user
     - name: Copy to S3
-      run: 'sudo aws s3 cp /home/ec2-user/example.py s3://testingnew1234/demo/ '
+      run: 'sudo aws s3 cp etl/example.py s3://testingnew1234/demo/ '
