@@ -8,12 +8,12 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Copy to Databricks
-      run: sudo databricks fs cp -r dags/sample_dag.py /home/ec2-user
+    - name: Copy to Airflow
+      run: sudo cp -r dags/sample_dag.py /home/ec2-user
   qa:
     runs-on: self-hosted
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Copy to Databricks
-      run: sudo databricks fs cp -r dags/sample_dag.py /home/ec2-user
+    - name: Copy to Airflow
+      run: sudo cp -r dags/sample_dag.py /home/ec2-user
