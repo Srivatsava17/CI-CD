@@ -8,12 +8,12 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Copy to S3
-      run: 'sudo aws s3 cp etl/example.py s3://testingnew1234/demo/ '
+    - name: Copy to Databricks
+      run: sudo databricks fs cp -r etl/example.py dbfs:/dbfs/path
   qa:
     runs-on: self-hosted
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Copy to S3
-      run: 'sudo aws s3 cp etl/example.py s3://testingnew1234/demo/ '
+    - name: Copy to Databricks
+      run: sudo databricks fs cp -r etl/example.py dbfs:/dbfs/path
