@@ -11,7 +11,7 @@ spark = SparkSession.builder\
             .config("spark.sql.execution.arrow.enabled", "true")\
             .getOrCreate()
 
-df_fdsfds = spark.read.format('json').load("dsfa")
+df_sdfdsfd = spark.read.format('json').load("dsfdf")
     
-df_fdsfds.write.format('json').save('fsdfsd', header = True)
+df_dsfds.write.format('avro').save('sdfdsff', header = True)
     
