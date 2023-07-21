@@ -11,7 +11,32 @@ spark = SparkSession.builder\
             .config("spark.sql.execution.arrow.enabled", "true")\
             .getOrCreate()
 
-df_sdfdsfd = spark.read.format('json').load("dsfdf")
+condition = None
+df_taskname=spark.read\
+    .format("com.databricks.spark.redshift")\
+    .option("tempdir", "temp")    .option("url", "jdbc")\
+    .option("user", DBUtils(spark).secrets.get(scope="credina", key="username"))\
+    .option("password", DBUtils(spark).secrets.get(scope="credina", key="password"))\
+    .option("dbtable", "tablename")\
+    .option("forward_spark_s3_credentials", True)\
+    .load()
+
+
+if condition is not None:
+    df_taskname = df_taskname.filter(condition)
     
-df_dsfds.write.format('avro').save('sdfdsff', header = True)
+df_taskname.show()
+    
+
+# Write the DataFrame to the database table
+df_taskname.write\
+    .format("com.databricks.spark.redshift")\
+    .option("tempdir", "temp")\
+    .option("url", "jdbc")\
+    .option('dbtable', 'tablename')\
+    .option("user", DBUtils(spark).secrets.get(scope="credi", key="username"))\
+    .option("password", DBUtils(spark).secrets.get(scope="credi", key="passsword"))\
+    .option("dbtable", "tablename")\
+    .option("forward_spark_s3_credentials", True)\
+    .save()
     
