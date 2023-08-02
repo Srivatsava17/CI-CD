@@ -9,4 +9,4 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Copy to S3
-      run: 'sudo aws s3 cp etl/example.py s3://infra2025bucketname '
+      run: 'sudo aws s3 cp etl/example.py s3://agsprojectbucket1/test_demo/ '
