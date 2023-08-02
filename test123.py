@@ -39,6 +39,6 @@ if condition:
 
 
     
-extract.write.format('csv').mode('overwrite').save('s3://testags123bucket/test_demo121/', header = True)
+extract.write.format('csv').mode('overwrite').save('s3://agsproject123bucket/test_demo1/', header = True)
 display(extract)
     
