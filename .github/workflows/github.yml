@@ -3,7 +3,7 @@
     branches:
     - main
 jobs:
-  Development:
+  QA:
     runs-on: self-hosted
     steps:
     - name: Checkout code
