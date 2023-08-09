@@ -9,4 +9,4 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Copy to S3
-      run: sudo aws s3 cp etl/ s3://pharcomm360-etl/input_file/ --recursive
+      run: sudo aws s3 cp etl/ s3://pharcomm360-etl/ --recursive
