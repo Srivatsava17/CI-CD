@@ -9,11 +9,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Copy to Airflow
-      run: 'sudo cp -r dags/sample_dag.py /home/ec2-user '
+      run: 'sudo cp -r data.py /home/ec2-user '
   QA:
     runs-on: [self-hosted,QA]
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Copy to Airflow
-      run: 'sudo cp -r dags/sample_dag.py /home/ec2-user '
+      run: 'sudo cp -r data.py/home/ec2-user '
