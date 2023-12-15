@@ -4,16 +4,9 @@
     - main
 jobs:
   Development:
-    runs-on: [self-hosted,dev]
+    runs-on: self-hosted
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Copy to Airflow
-      run: 'sudo cp -r dags/sample_dag.py /home/ec2-user '
-  QA:
-    runs-on: [self-hosted,dev]
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Copy to Airflow
-      run: 'sudo cp -r dags/sample_dag.py /home/ec2-user '
+    - name: Copy to S3
+      run: sudo aws s3 cp etl/ s3://pharcomm360-etl/input_file/ --recursive
