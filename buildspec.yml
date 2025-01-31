@@ -1,0 +1,27 @@
+version: 0.2
+
+env:
+  variables:
+    IMAGE_REPO_NAME: "Geninsights_data_lens"
+    AWS_ACCOUNT_ID: "528503375915"
+    AWS_DEFAULT_REGION: "us-west-2”
+    aws secretsmanager="data_lens_secrets”
+  parameter-store:
+    BRANCH_NAME: “dev”-stage”
+
+phases:
+  pre_build:
+    commands:
+      - echo "Logging in to ECR..."
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - echo "Fetching environment variables from Secrets Manager..."
+      - export ENV_VARS=$(aws secretsmanager get-secret-value --secret-id $BRANCH_NAME --query SecretString --output text)
+  build:
+    commands:
+      - echo "Building Docker image for branch: $BRANCH_NAME..."
+      - docker build -t $IMAGE_REPO_NAME:$BRANCH_NAME .
+  post_build:
+    commands:
+      - echo "Pushing Docker image to ECR..."
+      - docker tag $IMAGE_REPO_NAME:$BRANCH_NAME $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$BRANCH_NAME
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$BRANCH_NAME
